@@ -64,9 +64,9 @@ userSchema.statics.register = async function(username, password) {
 
 //---------------------Logga in---------------------------------------------------//
 
-userSchema.statics.login = async function (email, password) {
+userSchema.statics.login = async function (username, password) {
     try {
-        const oneUser = await this.findOne({email: email.toLowerCase()}); 
+        const oneUser = await this.findOne({username: username.toLowerCase()}); 
         if(!oneUser) { 
             throw new error("Ogiltiga uppgifter"); }  
 

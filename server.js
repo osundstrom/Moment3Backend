@@ -17,6 +17,7 @@ const cors = require("@koa/cors");
 
 //routers
 const userRouter = require("./routes/userRouter.js"); 
+const articleRouter = require("./routes/articleRouter.js"); 
 
 //---------------------------Använder----------------------------------//
 
@@ -32,6 +33,7 @@ app.use(bodyParser());
 
 //använder router
 app.use(userRouter.routes());
+app.use(articleRouter.routes());
 
 
 //---------------------------Ansluter mongodb----------------------------------//
