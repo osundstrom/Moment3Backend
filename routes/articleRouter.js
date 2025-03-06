@@ -32,12 +32,42 @@ router.get("/article", async (ctx) => {
     }
 });
 
+//---------------------------GET speecifik----------------------------------//
+
+
+router.get("/article/:id", async (ctx) => { 
+    try {
+        const {id} = ctx.params; 
+
+        //hämtar alla objekt
+        const IdArticle = await articleModel.findById(id); 
+        
+        
+        if (IdArticle) {
+            ctx.body = IdArticle; 
+        } else { //annars
+            ctx.status = 400; //statuskod
+            ctx.message = "Hittas ej"  //meddlande
+        }
+
+
+    } catch (error) { //vid error
+        ctx.status = 500; //statuskod
+        ctx.body = {
+            message: "Error, kunde ej hämta artikel", 
+            error: error.message 
+        };
+    }
+});
+
+
 
 //---------------------------POST, secret----------------------------------//
 
 router.post("/article",secretJWT, async (ctx) => {
     try {
         
+       
         //hämta värden
         const { title, description, content, author, post_created, image} = ctx.request.body;
 
@@ -71,7 +101,7 @@ router.post("/article",secretJWT, async (ctx) => {
 
 //---------------------------DELETE, secret----------------------------------//
 
-router.delete("/article:id",secretJWT, async (ctx) => {
+router.delete("/article/:id",secretJWT, async (ctx) => {
     //hämtar ID
     const {id} = ctx.params; 
     try {
@@ -103,7 +133,7 @@ router.delete("/article:id",secretJWT, async (ctx) => {
 
 //---------------------------PUT, secret----------------------------------//
 
-router.put("/article:id", secretJWT, async (ctx) => {
+router.put("/article/:id", secretJWT, async (ctx) => {
     //hämtar id
     const {id} = ctx.params; 
     try {
